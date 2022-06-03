@@ -51,8 +51,8 @@ class _LoginWidgetState extends State<LoginWidget> {
             color: Color(0xFF14181B),
             image: DecorationImage(
               fit: BoxFit.cover,
-              image: Image.network(
-                'https://images.unsplash.com/photo-1525824236856-8c0a31dfe3be?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8d2F0ZXJmYWxsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60',
+              image: Image.asset(
+                'assets/images/photo-1525824236856-8c0a31dfe3be?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8d2F0ZXJmYWxsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60',
               ).image,
             ),
           ),
@@ -60,7 +60,7 @@ class _LoginWidgetState extends State<LoginWidget> {
             width: 100,
             height: 100,
             decoration: BoxDecoration(
-              color: Color(0x990F1113),
+              color: Color(0x993B7396),
             ),
             child: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0, 70, 0, 0),
@@ -358,17 +358,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                                               ),
                                               borderRadius: 8,
                                             ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  20, 0, 20, 0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [],
                                           ),
                                         ),
                                       ],

@@ -1,54 +1,11 @@
 {
   "project_info": {
     "project_number": "716871945753",
+    "firebase_url": "https://tarter-9bf7f-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "tarter-9bf7f",
     "storage_bucket": "tarter-9bf7f.appspot.com"
   },
   "client": [
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:716871945753:android:48f657f48d48106bce6488",
-        "android_client_info": {
-          "package_name": "Job.Posts"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "716871945753-2pji6cjtvl4utaoj23fb40vvda6h7j4h.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "Job.Posts",
-            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
-          }
-        },
-        {
-          "client_id": "716871945753-2f9du5gl2t9e65tpao3sf5ffee4ao9p5.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyD5lZfrDa8GjKNBc1avCHVfC9zop6b-9ms"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "716871945753-2f9du5gl2t9e65tpao3sf5ffee4ao9p5.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "716871945753-m0d4hh0guohgc13ripas5ovtmh1ejj9q.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "Job.Posts"
-              }
-            }
-          ]
-        }
-      }
-    },
     {
       "client_info": {
         "mobilesdk_app_id": "1:716871945753:android:59d2ecbc28b000a5ce6488",
