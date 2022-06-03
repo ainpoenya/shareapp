@@ -1,8 +1,11 @@
+import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../lagi2/lagi2_widget.dart';
+import '../profil/profil_widget.dart';
+import '../sample_detail/sample_detail_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -354,10 +357,20 @@ class _HomePageWidgetState extends State<HomePageWidget>
         actions: [
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
-            child: Icon(
-              Icons.settings_outlined,
-              color: Colors.black,
-              size: 24,
+            child: InkWell(
+              onTap: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Lagi2Widget(),
+                  ),
+                );
+              },
+              child: Icon(
+                Icons.settings_outlined,
+                color: Colors.black,
+                size: 24,
+              ),
             ),
           ),
         ],
@@ -365,175 +378,241 @@ class _HomePageWidgetState extends State<HomePageWidget>
         elevation: 2,
       ),
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => Lagi2Widget(),
-            ),
-          );
-        },
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-        elevation: 8,
-      ),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 44),
-                child: StreamBuilder<List<SamplesRecord>>(
-                  stream: querySamplesRecord(
-                    queryBuilder: (samplesRecord) =>
-                        samplesRecord.orderBy('created_at', descending: true),
+          child: StreamBuilder<UsersRecord>(
+            stream: UsersRecord.getDocument(currentUserReference),
+            builder: (context, snapshot) {
+              // Customize what your widget looks like when it's loading.
+              if (!snapshot.hasData) {
+                return Center(
+                  child: SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: CircularProgressIndicator(
+                      color: FlutterFlowTheme.of(context).primaryColor,
+                    ),
                   ),
-                  builder: (context, snapshot) {
-                    // Customize what your widget looks like when it's loading.
-                    if (!snapshot.hasData) {
-                      return Center(
-                        child: SizedBox(
-                          width: 50,
-                          height: 50,
-                          child: CircularProgressIndicator(
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                          ),
-                        ),
-                      );
-                    }
-                    List<SamplesRecord> listViewSamplesRecordList =
-                        snapshot.data;
-                    return ListView.builder(
-                      padding: EdgeInsets.zero,
-                      primary: false,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      itemCount: listViewSamplesRecordList.length,
-                      itemBuilder: (context, listViewIndex) {
-                        final listViewSamplesRecord =
-                            listViewSamplesRecordList[listViewIndex];
-                        return Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(16, 0, 16, 12),
-                          child: Container(
-                            width: 100,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 5,
-                                  color: Color(0x1F000000),
-                                  offset: Offset(0, 2),
-                                )
-                              ],
-                              borderRadius: BorderRadius.circular(12),
+                );
+              }
+              final columnUsersRecord = snapshot.data;
+              return Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 44),
+                    child: StreamBuilder<List<SamplesRecord>>(
+                      stream: querySamplesRecord(
+                        queryBuilder: (samplesRecord) => samplesRecord
+                            .orderBy('created_at', descending: true),
+                      ),
+                      builder: (context, snapshot) {
+                        // Customize what your widget looks like when it's loading.
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: SizedBox(
+                              width: 50,
+                              height: 50,
+                              child: CircularProgressIndicator(
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor,
+                              ),
                             ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      4, 4, 4, 4),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(12),
-                                    child: Image.network(
-                                      listViewSamplesRecord.imageUrl,
-                                      width: 120,
-                                      height: 100,
-                                      fit: BoxFit.cover,
+                          );
+                        }
+                        List<SamplesRecord> listViewSamplesRecordList =
+                            snapshot.data;
+                        return ListView.builder(
+                          padding: EdgeInsets.zero,
+                          primary: false,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          itemCount: listViewSamplesRecordList.length,
+                          itemBuilder: (context, listViewIndex) {
+                            final listViewSamplesRecord =
+                                listViewSamplesRecordList[listViewIndex];
+                            return Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(16, 0, 16, 12),
+                              child: InkWell(
+                                onTap: () async {
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => SampleDetailWidget(
+                                        detailnya:
+                                            listViewSamplesRecord.reference,
+                                      ),
                                     ),
+                                  );
+                                },
+                                child: Container(
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        blurRadius: 5,
+                                        color: Color(0x1F000000),
+                                        offset: Offset(0, 2),
+                                      )
+                                    ],
+                                    borderRadius: BorderRadius.circular(12),
                                   ),
-                                ),
-                                Expanded(
-                                  child: Column(
+                                  child: Row(
                                     mainAxisSize: MainAxisSize.max,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
                                     children: [
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            8, 12, 16, 0),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              listViewSamplesRecord.sampleName,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .title3,
-                                            ),
-                                          ],
-                                        ).animated([
-                                          animationsMap[
-                                              'rowOnPageLoadAnimation1']
-                                        ]),
+                                            4, 4, 4, 4),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          child: Image.network(
+                                            listViewSamplesRecord.imageUrl,
+                                            width: 120,
+                                            height: 100,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
                                       ),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            8, 0, 16, 0),
-                                        child: Row(
+                                      Expanded(
+                                        child: Column(
                                           mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              listViewSamplesRecord.deskripsi,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyText2,
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(8, 12, 16, 0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    listViewSamplesRecord
+                                                        .sampleName,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .title3,
+                                                  ),
+                                                ],
+                                              ).animated([
+                                                animationsMap[
+                                                    'rowOnPageLoadAnimation1']
+                                              ]),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(8, 0, 16, 0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    listViewSamplesRecord
+                                                        .deskripsi
+                                                        .maybeHandleOverflow(
+                                                            maxChars: 25),
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyText2,
+                                                  ),
+                                                ],
+                                              ).animated([
+                                                animationsMap[
+                                                    'rowOnPageLoadAnimation2']
+                                              ]),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(8, 0, 16, 12),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                children: [
+                                                  Text(
+                                                    '\$120.00',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .subtitle1
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryColor,
+                                                        ),
+                                                  ),
+                                                ],
+                                              ).animated([
+                                                animationsMap[
+                                                    'rowOnPageLoadAnimation3']
+                                              ]),
                                             ),
                                           ],
-                                        ).animated([
-                                          animationsMap[
-                                              'rowOnPageLoadAnimation2']
-                                        ]),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            8, 0, 16, 12),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            Text(
-                                              '\$120.00',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .subtitle1
-                                                      .override(
-                                                        fontFamily: 'Poppins',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryColor,
-                                                      ),
-                                            ),
-                                          ],
-                                        ).animated([
-                                          animationsMap[
-                                              'rowOnPageLoadAnimation3']
-                                        ]),
+                                        ),
                                       ),
                                     ],
                                   ),
                                 ),
-                              ],
-                            ),
-                          ).animated(
-                              [animationsMap['containerOnPageLoadAnimation1']]),
+                              ).animated([
+                                animationsMap['containerOnPageLoadAnimation1']
+                              ]),
+                            );
+                          },
                         );
                       },
-                    );
-                  },
-                ),
-              ),
-            ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Icon(
+                          Icons.home,
+                          color: Colors.black,
+                          size: 24,
+                        ),
+                        Icon(
+                          Icons.settings_outlined,
+                          color: Colors.black,
+                          size: 24,
+                        ),
+                        Icon(
+                          Icons.settings_outlined,
+                          color: Colors.black,
+                          size: 24,
+                        ),
+                        InkWell(
+                          onTap: () async {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ProfilWidget(),
+                              ),
+                            );
+                          },
+                          child: Icon(
+                            Icons.person,
+                            color: Colors.black,
+                            size: 24,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),

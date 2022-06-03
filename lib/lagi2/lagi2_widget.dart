@@ -6,6 +6,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/upload_media.dart';
+import '../sukses/sukses_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -154,6 +155,7 @@ class _Lagi2WidgetState extends State<Lagi2Widget> {
                                 controller: namaSampelController,
                                 obscureText: false,
                                 decoration: InputDecoration(
+                                  labelText: 'Sample',
                                   hintText: 'Nama Sample',
                                   hintStyle:
                                       FlutterFlowTheme.of(context).bodyText2,
@@ -179,7 +181,6 @@ class _Lagi2WidgetState extends State<Lagi2Widget> {
                                 ),
                                 style: FlutterFlowTheme.of(context).bodyText1,
                                 textAlign: TextAlign.start,
-                                maxLines: 0,
                               ),
                             ),
                           ],
@@ -199,6 +200,7 @@ class _Lagi2WidgetState extends State<Lagi2Widget> {
                                     controller: deskripsiController,
                                     obscureText: false,
                                     decoration: InputDecoration(
+                                      labelText: 'Deskripsi',
                                       hintText: 'Deskripsi..',
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .bodyText2,
@@ -225,7 +227,6 @@ class _Lagi2WidgetState extends State<Lagi2Widget> {
                                     style:
                                         FlutterFlowTheme.of(context).bodyText1,
                                     textAlign: TextAlign.start,
-                                    maxLines: 0,
                                   ),
                                 ),
                               ],
@@ -246,8 +247,30 @@ class _Lagi2WidgetState extends State<Lagi2Widget> {
                 final samplesCreateData = createSamplesRecordData(
                   sampleName: namaSampelController.text,
                   deskripsi: deskripsiController.text,
+                  imageUrl: uploadedFileUrl,
                 );
                 await SamplesRecord.collection.doc().set(samplesCreateData);
+                await showDialog(
+                  context: context,
+                  builder: (alertDialogContext) {
+                    return AlertDialog(
+                      title: Text('Alert'),
+                      content: Text('Sukses'),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(alertDialogContext),
+                          child: Text('Ok'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SuksesWidget(),
+                  ),
+                );
               },
               text: 'Create Post',
               options: FFButtonOptions(

@@ -18,9 +18,6 @@ abstract class SamplesRecord
   String get deskripsi;
 
   @nullable
-  int get jumlah;
-
-  @nullable
   String get bersedia;
 
   @nullable
@@ -39,16 +36,19 @@ abstract class SamplesRecord
   BuiltList<DocumentReference> get likeBy;
 
   @nullable
+  String get jumlah;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
   static void _initializeBuilder(SamplesRecordBuilder builder) => builder
     ..sampleName = ''
     ..deskripsi = ''
-    ..jumlah = 0
     ..bersedia = ''
     ..imageUrl = ''
-    ..likeBy = ListBuilder();
+    ..likeBy = ListBuilder()
+    ..jumlah = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('samples');
@@ -74,20 +74,20 @@ abstract class SamplesRecord
 Map<String, dynamic> createSamplesRecordData({
   String sampleName,
   String deskripsi,
-  int jumlah,
   String bersedia,
   String imageUrl,
   DateTime createdAt,
   DocumentReference user,
+  String jumlah,
 }) =>
     serializers.toFirestore(
         SamplesRecord.serializer,
         SamplesRecord((s) => s
           ..sampleName = sampleName
           ..deskripsi = deskripsi
-          ..jumlah = jumlah
           ..bersedia = bersedia
           ..imageUrl = imageUrl
           ..createdAt = createdAt
           ..user = user
-          ..likeBy = null));
+          ..likeBy = null
+          ..jumlah = jumlah));
